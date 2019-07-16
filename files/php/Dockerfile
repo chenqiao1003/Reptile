@@ -1,5 +1,5 @@
 FROM php:7.2-fpm
-MAINTAINER chenqiao "chenqiao1003@126.com"
+MAINTAINER laoyoutiao
 # 设置时区
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -30,7 +30,6 @@ RUN apt-get update && apt-get install -y \
 
 # 将预先下载好的拓展包从宿主机拷贝进去
 COPY ./pkg/redis.tgz /home/redis.tgz
-COPY ./pkg/cphalcon.tar.gz /home/cphalcon.tar.gz
 
 # 安装 PECL 拓展，这里我们安装的是Redis
 RUN pecl install /home/redis.tgz && echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
