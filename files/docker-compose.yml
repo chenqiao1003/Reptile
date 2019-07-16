@@ -1,0 +1,28 @@
+version: '3.2'
+services:      
+  php-fpm-python:
+    build: ./php/    
+    ports:
+      - "9011:9000"    
+    volumes:
+      - ../app:/data/www:rw
+      - ./php/php-dev.ini:/usr/local/etc/php/php.ini:ro
+      - ./php/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro      
+      - ../logs/php-fpm:/var/log/php-fpm:rw
+    restart: always
+    command: php-fpm
+  nginx-python:
+    build: ./nginx
+    depends_on:
+      - php-fpm-python
+    links:
+      - php-fpm-python:php-fpm
+    volumes:
+      - ../app:/data/www:rw
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../logs/nginx:/var/log/nginx
+    ports:
+      - "6011:80"      
+    restart: always
+    command: nginx -g 'daemon off;'  
