@@ -1,6 +1,6 @@
 # 简单的网页爬虫
 ============================
-## pyhon 爬取百度页面内容 
+## python 爬取百度页面内容 
 ```bash
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
